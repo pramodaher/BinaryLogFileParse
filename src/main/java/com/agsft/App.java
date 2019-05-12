@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 
 import com.agsft.packetDescriptor.PacketDescriptor;
 import com.agsft.template001.SataIdentify;
+import com.agsft.template002.SmartAttribute;
 
 import io.kaitai.struct.ByteBufferKaitaiStream;
 
@@ -61,7 +62,7 @@ public class App
     	int a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p;
     	String str1,str2,str3,str4,str5,str6,str7,str8,str9,str10;
     	
-    	
+    	/*
     	Path path = Paths.get("/home/pramod/Desktop/BinaryParse/SATA/Template001_SataIdentify.bin");
         
    	 byte[] bytes;
@@ -151,8 +152,49 @@ public class App
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
 		}
-        
+        */
        
+    	
+    	Path path = Paths.get("/home/pramod/Desktop/BinaryParse/SATA/Template002_SATA_SMARTAttr.bin");
+        
+      	 byte[] bytes;
+   	
+   			try {
+				bytes = Files.readAllBytes(path);
+				 ByteBufferKaitaiStream byteBufferKaitaiStream=new ByteBufferKaitaiStream(bytes);
+				 
+				 SmartAttribute smartAttribute=new SmartAttribute(byteBufferKaitaiStream);
+				 
+				 str1=String.format("%4s", Integer.toHexString(smartAttribute.firstAttribute().value().thirdWord())).replace(' ', '0');
+				 str2=String.format("%4s", Integer.toHexString(smartAttribute.firstAttribute().value().secondWord())).replace(' ', '0');
+				 str3=String.format("%4s", Integer.toHexString(smartAttribute.firstAttribute().value().firstWord())).replace(' ', '0');
+				 
+				 System.out.println("Id: "+Integer.toHexString(smartAttribute.firstAttribute().id()));
+				 System.out.println("Flag: "+Integer.toHexString(smartAttribute.firstAttribute().flag()));
+				 System.out.println("Attr: "+Integer.toHexString(smartAttribute.firstAttribute().attr()));
+				 System.out.println("Worst: "+Integer.toHexString(smartAttribute.firstAttribute().worst()));
+				 System.out.println("Value: "+str1+str2+str3);
+				 System.out.println("Rev :"+Integer.toHexString(smartAttribute.firstAttribute().rev()));
+				 
+				 str1=String.format("%4s", Integer.toHexString(smartAttribute.secondAttribute().value().thirdWord())).replace(' ', '0');
+				 str2=String.format("%4s", Integer.toHexString(smartAttribute.secondAttribute().value().secondWord())).replace(' ', '0');
+				 str3=String.format("%4s", Integer.toHexString(smartAttribute.secondAttribute().value().firstWord())).replace(' ', '0');
+				 
+				 System.out.println("Id: "+Integer.toHexString(smartAttribute.secondAttribute().id()));
+				 System.out.println("Flag: "+Integer.toHexString(smartAttribute.secondAttribute().flag()));
+				 System.out.println("Attr: "+Integer.toHexString(smartAttribute.secondAttribute().attr()));
+				 System.out.println("Worst: "+Integer.toHexString(smartAttribute.secondAttribute().worst()));
+				 System.out.println("Value: "+str1+str2+str3);
+				 System.out.println("Rev :"+Integer.toHexString(smartAttribute.secondAttribute().rev()));
+				
+				 
+				
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+   			
+   		
     }
 }
 
