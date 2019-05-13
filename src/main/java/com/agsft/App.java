@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import com.agsft.packetDescriptor.PacketDescriptor;
+import com.agsft.packetDescriptor.PacketDescriptor.TemplateType;
 import com.agsft.template001.SataIdentify;
 import com.agsft.template002.SmartAttribute;
 
@@ -21,10 +23,10 @@ public class App
     public static void main( String[] args )
     {
        
-    	/*
+    	
     	 
-    	 
-    	Path path = Paths.get("/home/pramod/Desktop/BinaryParse/SATA/SATAInfo_0016.bin");
+    	/* 
+    	Path path = Paths.get("./SATAInfo_0016.bin");
         
     	 byte[] bytes;
 		try {
@@ -42,13 +44,21 @@ public class App
 			 System.out.print(packetDescriptor.serialNumber());
 			 System.out.print(packetDescriptor.firmwareVersion());
 			 System.out.print(packetDescriptor.hostId());
-			 System.out.print(packetDescriptor.rackNumber());
-			 System.out.print(packetDescriptor.slotNumber());
 			 System.out.print(packetDescriptor.systemFw());
 			 System.out.print(packetDescriptor.os());
 			 System.out.print(packetDescriptor.interfacee());
 			 System.out.print(packetDescriptor.attribute());
-			 System.out.print(packetDescriptor.numberOfRecords());
+			 System.out.println(packetDescriptor.numberOfRecord());
+			 System.out.println(packetDescriptor.recordLength());
+
+			 ArrayList<TemplateType> template=packetDescriptor.template();
+			 
+			 for(TemplateType temp:template)
+			 {
+				System.out.println(temp.byteIndex());
+				System.out.println(temp.length());
+				System.out.println(temp.type());
+			 }
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -62,8 +72,8 @@ public class App
     	int a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p;
     	String str1,str2,str3,str4,str5,str6,str7,str8,str9,str10;
     	
-    	/*
-    	Path path = Paths.get("/home/pramod/Desktop/BinaryParse/SATA/Template001_SataIdentify.bin");
+    	
+    	Path path = Paths.get("./Template001_SataIdentify.bin");
         
    	 byte[] bytes;
 		try {
@@ -152,9 +162,9 @@ public class App
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
 		}
-        */
+        
        
-    	
+    	/*
     	Path path = Paths.get("/home/pramod/Desktop/BinaryParse/SATA/Template002_SATA_SMARTAttr.bin");
         
       	 byte[] bytes;
@@ -194,7 +204,7 @@ public class App
 				e1.printStackTrace();
 			}
    			
-   		
+   		*/
     }
 }
 

@@ -7,6 +7,7 @@ import io.kaitai.struct.KaitaiStruct;
 import io.kaitai.struct.KaitaiStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 public class PacketDescriptor extends KaitaiStruct {
     public static PacketDescriptor fromFile(String fileName) throws IOException {
@@ -39,13 +40,52 @@ public class PacketDescriptor extends KaitaiStruct {
         this.serialNumber = new String(this._io.readBytesTerm(13, false, true, true), Charset.forName("UTF-8"));
         this.firmwareVersion = new String(this._io.readBytesTerm(13, false, true, true), Charset.forName("UTF-8"));
         this.hostId = new String(this._io.readBytesTerm(13, false, true, true), Charset.forName("UTF-8"));
-        this.rackNumber = new String(this._io.readBytesTerm(13, false, true, true), Charset.forName("UTF-8"));
-        this.slotNumber = new String(this._io.readBytesTerm(13, false, true, true), Charset.forName("UTF-8"));
         this.systemFw = new String(this._io.readBytesTerm(13, false, true, true), Charset.forName("UTF-8"));
         this.os = new String(this._io.readBytesTerm(13, false, true, true), Charset.forName("UTF-8"));
         this.interfacee = new String(this._io.readBytesTerm(13, false, true, true), Charset.forName("UTF-8"));
         this.attribute = new String(this._io.readBytesTerm(13, false, true, true), Charset.forName("UTF-8"));
-        this.numberOfRecords = new String(this._io.readBytesTerm(13, false, true, true), Charset.forName("UTF-8"));
+        this.numberOfRecord = new String(this._io.readBytesTerm(58, false, true, true), Charset.forName("UTF-8"));
+        this.skip = new String(this._io.readBytesTerm(32, false, true, true), Charset.forName("UTF-8"));
+        this.recordLength = new String(this._io.readBytesTerm(13, false, true, true), Charset.forName("UTF-8"));
+        template = new ArrayList<TemplateType>((int) (8));
+        for (int i = 0; i < 8; i++) {
+            this.template.add(new TemplateType(this._io, this, _root));
+        }
+    }
+    public static class TemplateType extends KaitaiStruct {
+        public static TemplateType fromFile(String fileName) throws IOException {
+            return new TemplateType(new ByteBufferKaitaiStream(fileName));
+        }
+
+        public TemplateType(KaitaiStream _io) {
+            this(_io, null, null);
+        }
+
+        public TemplateType(KaitaiStream _io, PacketDescriptor _parent) {
+            this(_io, _parent, null);
+        }
+
+        public TemplateType(KaitaiStream _io, PacketDescriptor _parent, PacketDescriptor _root) {
+            super(_io);
+            this._parent = _parent;
+            this._root = _root;
+            _read();
+        }
+        private void _read() {
+            this.byteIndex = new String(this._io.readBytesTerm(13, false, true, true), Charset.forName("UTF-8"));
+            this.length = new String(this._io.readBytesTerm(13, false, true, true), Charset.forName("UTF-8"));
+            this.type = new String(this._io.readBytesTerm(13, false, true, true), Charset.forName("UTF-8"));
+        }
+        private String byteIndex;
+        private String length;
+        private String type;
+        private PacketDescriptor _root;
+        private PacketDescriptor _parent;
+        public String byteIndex() { return byteIndex; }
+        public String length() { return length; }
+        public String type() { return type; }
+        public PacketDescriptor _root() { return _root; }
+        public PacketDescriptor _parent() { return _parent; }
     }
     private String headerSize;
     private String header;
@@ -58,13 +98,14 @@ public class PacketDescriptor extends KaitaiStruct {
     private String serialNumber;
     private String firmwareVersion;
     private String hostId;
-    private String rackNumber;
-    private String slotNumber;
     private String systemFw;
     private String os;
     private String interfacee;
     private String attribute;
-    private String numberOfRecords;
+    private String numberOfRecord;
+    private String skip;
+    private String recordLength;
+    private ArrayList<TemplateType> template;
     private PacketDescriptor _root;
     private KaitaiStruct _parent;
     public String headerSize() { return headerSize; }
@@ -78,13 +119,14 @@ public class PacketDescriptor extends KaitaiStruct {
     public String serialNumber() { return serialNumber; }
     public String firmwareVersion() { return firmwareVersion; }
     public String hostId() { return hostId; }
-    public String rackNumber() { return rackNumber; }
-    public String slotNumber() { return slotNumber; }
     public String systemFw() { return systemFw; }
     public String os() { return os; }
     public String interfacee() { return interfacee; }
     public String attribute() { return attribute; }
-    public String numberOfRecords() { return numberOfRecords; }
+    public String numberOfRecord() { return numberOfRecord; }
+    public String skip() { return skip; }
+    public String recordLength() { return recordLength; }
+    public ArrayList<TemplateType> template() { return template; }
     public PacketDescriptor _root() { return _root; }
     public KaitaiStruct _parent() { return _parent; }
 }
