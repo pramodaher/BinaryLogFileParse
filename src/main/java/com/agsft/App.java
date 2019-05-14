@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import com.agsft.packetDescriptor.PacketDescriptor;
 import com.agsft.packetDescriptor.PacketDescriptor.TemplateType;
 import com.agsft.template001.SataIdentify;
+import com.agsft.template002.SmartAttribute;
+import com.agsft.template002.SmartAttribute.RecoredType;
 
 import io.kaitai.struct.ByteBufferKaitaiStream;
 
@@ -23,8 +25,8 @@ public class App
     {
        
     	
-    	 
-    	/*
+    	/* 
+    	
     	Path path = Paths.get("./SATAInfo_0016.bin");
         
     	 byte[] bytes;
@@ -48,7 +50,7 @@ public class App
 			 System.out.print(packetDescriptor.interfacee());
 			 System.out.print(packetDescriptor.attribute());
 			 System.out.println(packetDescriptor.numberOfRecord());
-			 System.out.println(packetDescriptor.recordLength().length());
+			 System.out.println(packetDescriptor.recordLength());
 
 			 ArrayList<TemplateType> template=packetDescriptor.template();
 			 
@@ -66,7 +68,7 @@ public class App
 		
 		
 		
-        *
+        */
     	
     	/*
     	
@@ -167,7 +169,7 @@ public class App
         
         */
        
-    	/*
+    	
     	Path path = Paths.get("./Template002_SATA_SMARTAttr.bin");
         
       	 byte[] bytes;
@@ -177,37 +179,30 @@ public class App
 				 ByteBufferKaitaiStream byteBufferKaitaiStream=new ByteBufferKaitaiStream(bytes);
 				 
 				 SmartAttribute smartAttribute=new SmartAttribute(byteBufferKaitaiStream);
+                 ArrayList<RecoredType> recored=smartAttribute.recored();
 				 
-				 str1=String.format("%4s", Integer.toHexString(smartAttribute.firstAttribute().value().thirdWord())).replace(' ', '0');
-				 str2=String.format("%4s", Integer.toHexString(smartAttribute.firstAttribute().value().secondWord())).replace(' ', '0');
-				 str3=String.format("%4s", Integer.toHexString(smartAttribute.firstAttribute().value().firstWord())).replace(' ', '0');
+                 String str1,str2,str3,str;
+				 System.out.println("Id    Flag   Attr  worst      value              rsv ");
 				 
-				 System.out.println("Id: "+Integer.toHexString(smartAttribute.firstAttribute().id()));
-				 System.out.println("Flag: "+Integer.toHexString(smartAttribute.firstAttribute().flag()));
-				 System.out.println("Attr: "+Integer.toHexString(smartAttribute.firstAttribute().attr()));
-				 System.out.println("Worst: "+Integer.toHexString(smartAttribute.firstAttribute().worst()));
-				 System.out.println("Value: "+str1+str2+str3);
-				 System.out.println("Rev :"+Integer.toHexString(smartAttribute.firstAttribute().rev()));
-				 
-				 str1=String.format("%4s", Integer.toHexString(smartAttribute.secondAttribute().value().thirdWord())).replace(' ', '0');
-				 str2=String.format("%4s", Integer.toHexString(smartAttribute.secondAttribute().value().secondWord())).replace(' ', '0');
-				 str3=String.format("%4s", Integer.toHexString(smartAttribute.secondAttribute().value().firstWord())).replace(' ', '0');
-				 
-				 System.out.println("Id: "+Integer.toHexString(smartAttribute.secondAttribute().id()));
-				 System.out.println("Flag: "+Integer.toHexString(smartAttribute.secondAttribute().flag()));
-				 System.out.println("Attr: "+Integer.toHexString(smartAttribute.secondAttribute().attr()));
-				 System.out.println("Worst: "+Integer.toHexString(smartAttribute.secondAttribute().worst()));
-				 System.out.println("Value: "+str1+str2+str3);
-				 System.out.println("Rev :"+Integer.toHexString(smartAttribute.secondAttribute().rev()));
+				 for(RecoredType temp:recored)
+				 {
+					 str1=String.format("%4s", Integer.toHexString(temp.value().firstWord())).replace(' ', '0');
+					 str2=String.format("%4s", Integer.toHexString(temp.value().secondWord())).replace(' ', '0');
+					 str3=String.format("%4s", Integer.toHexString(temp.value().thirdWord())).replace(' ', '0');
+					 
+					 str=str3+str2+str1;
 				
+					 System.out.println(temp.id()+"    "+Integer.toHexString(temp.flag())+"h      "+Integer.toHexString(temp.attr())+"h      "+Integer.toHexString(temp.worst())+"h       "+str+"h      "+Integer.toHexString(temp.rsv())+"h");
+				 }
 				 
+				
 				
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
    			
-   		*/
+   		
     }
 }
 
