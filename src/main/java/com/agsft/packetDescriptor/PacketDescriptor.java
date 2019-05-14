@@ -45,10 +45,13 @@ public class PacketDescriptor extends KaitaiStruct {
         this.interfacee = new String(this._io.readBytesTerm(13, false, true, true), Charset.forName("UTF-8"));
         this.attribute = new String(this._io.readBytesTerm(13, false, true, true), Charset.forName("UTF-8"));
         this.numberOfRecord = new String(this._io.readBytesTerm(58, false, true, true), Charset.forName("UTF-8"));
-        this.skip = new String(this._io.readBytesTerm(32, false, true, true), Charset.forName("UTF-8"));
-        this.recordLength = new String(this._io.readBytesTerm(13, false, true, true), Charset.forName("UTF-8"));
-        template = new ArrayList<TemplateType>((int) (8));
-        for (int i = 0; i < 8; i++) {
+        this._raw__raw_recordLength = this._io.readBytesTerm(13, false, true, true);
+        com.agsft.process.Length _process__raw__raw_recordLength = new com.agsft.process.Length();
+        this._raw_recordLength = _process__raw__raw_recordLength.decode(this._raw__raw_recordLength);
+        KaitaiStream _io__raw_recordLength = new ByteBufferKaitaiStream(_raw_recordLength);
+        this.recordLength = new StrTrim(_io__raw_recordLength, this, _root);
+        template = new ArrayList<TemplateType>((int) (recordLength().length()));
+        for (int i = 0; i < recordLength().length(); i++) {
             this.template.add(new TemplateType(this._io, this, _root));
         }
     }
@@ -87,6 +90,35 @@ public class PacketDescriptor extends KaitaiStruct {
         public PacketDescriptor _root() { return _root; }
         public PacketDescriptor _parent() { return _parent; }
     }
+    public static class StrTrim extends KaitaiStruct {
+        public static StrTrim fromFile(String fileName) throws IOException {
+            return new StrTrim(new ByteBufferKaitaiStream(fileName));
+        }
+
+        public StrTrim(KaitaiStream _io) {
+            this(_io, null, null);
+        }
+
+        public StrTrim(KaitaiStream _io, PacketDescriptor _parent) {
+            this(_io, _parent, null);
+        }
+
+        public StrTrim(KaitaiStream _io, PacketDescriptor _parent, PacketDescriptor _root) {
+            super(_io);
+            this._parent = _parent;
+            this._root = _root;
+            _read();
+        }
+        private void _read() {
+            this.length = this._io.readS1();
+        }
+        private byte length;
+        private PacketDescriptor _root;
+        private PacketDescriptor _parent;
+        public byte length() { return length; }
+        public PacketDescriptor _root() { return _root; }
+        public PacketDescriptor _parent() { return _parent; }
+    }
     private String headerSize;
     private String header;
     private String version;
@@ -103,11 +135,12 @@ public class PacketDescriptor extends KaitaiStruct {
     private String interfacee;
     private String attribute;
     private String numberOfRecord;
-    private String skip;
-    private String recordLength;
+    private StrTrim recordLength;
     private ArrayList<TemplateType> template;
     private PacketDescriptor _root;
     private KaitaiStruct _parent;
+    private byte[] _raw__raw_recordLength;
+    private byte[] _raw_recordLength;
     public String headerSize() { return headerSize; }
     public String header() { return header; }
     public String version() { return version; }
@@ -124,9 +157,10 @@ public class PacketDescriptor extends KaitaiStruct {
     public String interfacee() { return interfacee; }
     public String attribute() { return attribute; }
     public String numberOfRecord() { return numberOfRecord; }
-    public String skip() { return skip; }
-    public String recordLength() { return recordLength; }
+    public StrTrim recordLength() { return recordLength; }
     public ArrayList<TemplateType> template() { return template; }
     public PacketDescriptor _root() { return _root; }
     public KaitaiStruct _parent() { return _parent; }
+    public byte[] _raw__raw_recordLength() { return _raw__raw_recordLength; }
+    public byte[] _raw_recordLength() { return _raw_recordLength; }
 }

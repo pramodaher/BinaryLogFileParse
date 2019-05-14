@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import com.agsft.packetDescriptor.PacketDescriptor;
 import com.agsft.packetDescriptor.PacketDescriptor.TemplateType;
 import com.agsft.template001.SataIdentify;
-import com.agsft.template002.SmartAttribute;
 
 import io.kaitai.struct.ByteBufferKaitaiStream;
 
@@ -25,7 +24,7 @@ public class App
        
     	
     	 
-    	/* 
+    	/*
     	Path path = Paths.get("./SATAInfo_0016.bin");
         
     	 byte[] bytes;
@@ -49,7 +48,7 @@ public class App
 			 System.out.print(packetDescriptor.interfacee());
 			 System.out.print(packetDescriptor.attribute());
 			 System.out.println(packetDescriptor.numberOfRecord());
-			 System.out.println(packetDescriptor.recordLength());
+			 System.out.println(packetDescriptor.recordLength().length());
 
 			 ArrayList<TemplateType> template=packetDescriptor.template();
 			 
@@ -67,7 +66,9 @@ public class App
 		
 		
 		
-        */
+        *
+    	
+    	/*
     	
     	int a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p;
     	String str1,str2,str3,str4,str5,str6,str7,str8,str9,str10;
@@ -163,9 +164,11 @@ public class App
 			ex.printStackTrace();
 		}
         
+        
+        */
        
     	/*
-    	Path path = Paths.get("/home/pramod/Desktop/BinaryParse/SATA/Template002_SATA_SMARTAttr.bin");
+    	Path path = Paths.get("./Template002_SATA_SMARTAttr.bin");
         
       	 byte[] bytes;
    	
